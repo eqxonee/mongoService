@@ -2,16 +2,27 @@ version: '3.8'
 
 services:
 
-  mongodb:
+  mongo:
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27017:27017"
     volumes:
-      - mongodb_data:/data/db
+      - mongo_data:/data/db
+
+  mongoService:
+    build:
+      context: /Users/airm1/IdeaProjects/mongoService
+      dockerfile: Dockerfile
+    image: mongo-service
+    container_name: mongo-service
+    ports:
+      - "8040:8040"
+    depends_on:
+      - mongo
 
 volumes:
-  mongodb_data:
+  mongo_data:
