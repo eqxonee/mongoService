@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 @Service
@@ -21,7 +22,10 @@ public class NumberServiceImpl implements NumberService {
         String randomNumber = String.valueOf(new Random().nextLong(10000, 100000));
         LocalDateTime date = LocalDateTime.now();
 
-        number.setNumber(randomNumber);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYYMMDD");
+        String stringDate = formatter.format(date);
+
+        number.setNumber(randomNumber + stringDate);
         number.setOrderDate(date);
 
         numberRepository.save(number);
